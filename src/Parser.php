@@ -158,29 +158,14 @@ class Parser
      */
     private function parseProperty(\DOMElement $element): AbstractClassProperty
     {
-        $nameAttr = explode(':', $element->getAttribute('name'));
+        $nameAttr = explode(':', $element->getAttribute('name'), 2);
         $visibility = $element->getAttribute('visibility');
         $name = trim($nameAttr[0]);
         $type = null;
 
-        if (count($nameAttr) >= 2) {
+        if (count($nameAttr) === 2) {
             $type = trim($nameAttr[1]);
         }
-        
-        // 解析扩展数据
-        $extended = (count($nameAttr) > 2) ? trim($nameAttr[2]) : '';
-        // 将标签名补充到类型注释中
-        $label = '';
-        if (stripos('[', $extended) !== false) {
-            $label .= $extended;
-        } else {
-            $extended = trim($extended, '[]');
-            parse_str($extended, $extended);
-
-            $label .= $extended['label'];
-            // TODO 实现其它扩展，比如Java或者PHP8新增的"注解"特性
-        }
-        $type .= (strlen($label) ? ' ' : '') . $label;
 
         $property = $this->componentBuilder->createProperty($name, $type, $visibility);
 

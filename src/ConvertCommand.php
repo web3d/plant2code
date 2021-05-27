@@ -73,7 +73,7 @@ class ConvertCommand extends Command
             $tmpPuml = $outputDir . '/' . $fileInfo['filename'] . '.puml';
 
             $srcContent = file_get_contents($puml);
-            $srcContent = str_replace('/\'', ':', $srcContent);
+            $srcContent = str_replace('/\'', ' ', $srcContent);
             $srcContent = str_replace('\'/', '', $srcContent);
             file_put_contents($tmpPuml, $srcContent);
 
