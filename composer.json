@@ -13,7 +13,7 @@
     "php": ">=7.0",
     "illuminate/filesystem": "5.3.*",
     "illuminate/support": "5.3.*",
-    "twig/twig": "1.9.*",
+    "twig/twig": "2.14.*",
     "symfony/console": "3.2.*"
   },
   "require-dev": {
