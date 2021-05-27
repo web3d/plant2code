@@ -18,6 +18,8 @@ use Plant2Code\Language\AbstractClassProperty;
  */
 class Property extends AbstractClassProperty
 {
+    protected $defaultVisibility = 'protected';
+
     /**
      * Property constructor.
      *

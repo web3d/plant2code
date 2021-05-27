@@ -38,6 +38,7 @@ abstract class AbstractClassProperty extends AbstractLanguage
     {
         $this->name = $name;
         $this->type = $type;
+        if (!$visibility) $visibility = $this->defaultVisibility;
         $this->visibility = $visibility;
     }
 }

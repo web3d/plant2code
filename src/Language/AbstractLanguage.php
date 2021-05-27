@@ -26,6 +26,8 @@ abstract class AbstractLanguage
         '~' => 'package private',
         '+' => 'public'
     ];
+    
+    protected $defaultVisibility = 'public';
 
     /**
      * @var array
