@@ -41,4 +41,27 @@ abstract class AbstractClassProperty extends AbstractLanguage
         if (!$visibility) $visibility = $this->defaultVisibility;
         $this->visibility = $visibility;
     }
+
+    /**
+     * 从type的部分解析出扩展数据
+     * @return array
+     */
+    protected function splitExtent()
+    {
+        // 解析扩展数据
+        $tmp = explode(' ', $this->type, 2);
+        $this->type = $tmp[0];
+
+        $extended = (count($tmp) > 1) ? trim($tmp[1]) : '';
+        if (stripos('[', $extended) !== false) {
+            $extended = [
+                'label' => $extended,
+            ];
+        } else {
+            $extended = trim($extended, '[]');
+            parse_str($extended, $extended);
+        }
+        
+        return $extended;
+    }
 }

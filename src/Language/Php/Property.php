@@ -41,25 +41,14 @@ class Property extends AbstractClassProperty
         $field = '';
 
         if ($this->visibility and $this->name) {
-
+            $label = '';
             if ($this->type) {
                 // 解析扩展数据
-                $tmp = explode(' ', $this->type, 2);
-                $this->type = $tmp[0];
-
-                $extended = (count($tmp) > 1) ? trim($tmp[1]) : '';
+                $extended = $this->splitExtent();
+                $label .= $extended['label'];
                 // 将标签名补充到类型注释中
-                $label = '';
-                if (stripos('[', $extended) !== false) {
-                    $label .= $extended;
-                } else {
-                    $extended = trim($extended, '[]');
-                    parse_str($extended, $extended);
-
-                    $label .= $extended['label'];
-                    // TODO 实现其它扩展，比如Java或者PHP8新增的"注解"特性
-                }
                 $this->type .= (strlen($label) ? ' ' : '') . $label;
+                // TODO 实现其它扩展，比如Java或者PHP8新增的"注解"特性
             }
 
             $field = '/**' . PHP_EOL;
