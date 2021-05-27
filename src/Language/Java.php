@@ -9,7 +9,11 @@
 namespace Plant2Code\Language;
 
 
+use Plant2Code\Language\Java\Argument;
+use Plant2Code\Language\Java\Method;
 use Plant2Code\Language\Java\JavaClass;
+use Plant2Code\Language\Java\JavaNamespace;
+use Plant2Code\Language\Java\Property;
 
 class Java extends ComponentBuilder
 {
@@ -24,17 +28,17 @@ class Java extends ComponentBuilder
 
     public function createProperty(string $name = null, string $type = null, string $visibility = null)
     {
-        // TODO: Implement createProperty() method.
+        return new Property($name, $type, $visibility);
     }
 
     public function createMethod(string $name, string $visibility = null, array $args = [], string $type = null)
     {
-        // TODO: Implement createMethod() method.
+        return new Method($name, $visibility, $args, $type);
     }
 
     public function createMethodArgument(string $name = null, string $type = null)
     {
-        // TODO: Implement createMethodArgument() method.
+        return new Argument($name, $type);
     }
 
     /**
@@ -45,7 +49,7 @@ class Java extends ComponentBuilder
      */
     public function createNamespace(string $pumlNamespace, string $rootNS = null)
     {
-        // TODO: Implement createNamespace() method.
+        return new JavaNamespace($pumlNamespace, $rootNS);
     }
 
 
