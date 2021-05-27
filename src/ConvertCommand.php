@@ -69,18 +69,29 @@ class ConvertCommand extends Command
 
             $io->section('Creating XMI file.');
 
-            $command = "java -jar $appPath/plantuml.jar $puml -xmi:star";
+            // 追加逻辑，做预处理，将属性的行内注释部分的内容要保留，才能做后续的处理
+            $tmpPuml = $outputDir . '/' . $fileInfo['filename'] . '.puml';
+
+            $srcContent = file_get_contents($puml);
+            $srcContent = str_replace('/\'', ':', $srcContent);
+            $srcContent = str_replace('\'/', '', $srcContent);
+            file_put_contents($tmpPuml, $srcContent);
+
+            $command = "java -jar $appPath/plantuml.jar $tmpPuml -xmi:star";
             system($command);
 
             $io->text('Finished XMI creation.');
 
-            $xmi = $runPath . '/' . $fileInfo['dirname'] . '/' . $fileInfo['filename'] . '.xmi';
+            $xmi = $outputDir . '/' . $fileInfo['filename'] . '.xmi';
             $input->setArgument('input', $xmi);
 
             $io->section('Detecting classes and writing output...');
 
             $converter = new PlantUmlConverter($input, $output, $io);
             $converter->convertAndWrite();
+            
+            unlink($tmpPuml);
+            unlink($xmi);
 //            /** @var StrictCommand $formatter */
 //            $formatter = $this->getApplication()
 //                              ->find('formatter:use:sort');
@@ -96,7 +107,7 @@ class ConvertCommand extends Command
             $io->success('Done converting.');
 
         } catch (\Exception $e) {
-            $io->error($e->getMessage());
+            $io->error($e->getMessage() . $e->getTraceAsString());
         }
     }
 
