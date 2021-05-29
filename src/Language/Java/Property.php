@@ -43,7 +43,7 @@ class Property extends AbstractClassProperty
             if ($this->type) {
                 // 解析扩展数据
                 $extended = $this->splitExtent();
-                $label .= $extended['label'];
+                $label .= $extended['label'] ?? '';
 
                 // TODO 实现其它扩展，比如Java或者PHP8新增的"注解"特性
             }

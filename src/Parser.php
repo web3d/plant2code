@@ -159,6 +159,9 @@ class Parser
     private function parseProperty(\DOMElement $element): AbstractClassProperty
     {
         $nameAttr = explode(':', $element->getAttribute('name'), 2);
+        if (count($nameAttr) === 1) {
+            $nameAttr = explode(' ', $element->getAttribute('name'), 2);
+        }
         $visibility = $element->getAttribute('visibility');
         $name = trim($nameAttr[0]);
         $type = null;

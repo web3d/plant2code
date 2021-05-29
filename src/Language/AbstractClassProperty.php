@@ -50,7 +50,7 @@ abstract class AbstractClassProperty extends AbstractLanguage
     {
         // 解析扩展数据
         $tmp = explode(' ', $this->type, 2);
-        $this->type = $tmp[0];
+        $this->type = trim($tmp[0]);
 
         $extended = (count($tmp) > 1) ? trim($tmp[1]) : '';
         if (stripos('[', $extended) !== false) {
@@ -58,7 +58,7 @@ abstract class AbstractClassProperty extends AbstractLanguage
                 'label' => $extended,
             ];
         } else {
-            $extended = trim($extended, '[]');
+            $extended = str_replace(' ', '', trim($extended, '[]'));
             parse_str($extended, $extended);
         }
         
